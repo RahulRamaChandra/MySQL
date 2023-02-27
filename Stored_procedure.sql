@@ -48,4 +48,54 @@ delimiter ;
 call my_sqrt(4, @out_number);
 select @out_number;
 
-    
+use sakila;
+
+delimiter //
+
+create procedure setcounter(
+		inout counter int,
+        in inc int
+)
+begin 
+	set counter = counter + inc;
+end //
+delimiter ;
+
+#print the output
+set @counter = 1;
+call setcounter(@counter, 1);
+call setcounter(@counter, 3);
+select @counter;
+
+delimiter //
+create procedure user_variables()
+begin
+set @x = 15;
+set @y = 10;
+select @x, @y, @x - @y;
+end //
+
+
+
+call user_variables();
+
+# Conditional Statement
+
+use testdb;
+
+create procedure student_ifthen(IN s_subject varchar(15), out s_course varchar(15))
+begin
+declare sub varchar(10);
+select subject from student where s_subject = subject;
+if sub = 'computer' then
+set s_course = 'B.Tech';
+end if;
+end //
+
+show tables;
+select * from student;
+alter table studesubject varchar(25);
+
+
+call student_ifthen('computer', @s_course);
+select @s_course;
